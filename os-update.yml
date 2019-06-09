@@ -1,0 +1,22 @@
+---
+- name: Update
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Update YUM based
+      yum:
+        name: "*"
+        state: latest
+      become: yes
+      when: 
+        -  ansible_os_family == "RedHat"
+        -  ansible_distribution != "Fedora"
+
+    - name:  Update DNF based
+      dnf:
+        name: "*"
+        state: latest
+      become: yes
+      when: 
+        -  ansible_os_family == "RedHat"
+        -  ansible_distribution == "Fedora"
